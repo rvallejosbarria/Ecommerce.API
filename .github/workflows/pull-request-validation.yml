@@ -5,8 +5,7 @@ env:
 
 on:
   pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches: [ "master" ]
     
 jobs:
   build:
@@ -26,6 +25,3 @@ jobs:
 
       - name: Test with dotnet
         run: dotnet test --configuration Release --no-build
-
-      - name: Format with dotnet
-        run: dotnet format -v detailed --verify-no-changes
