@@ -1,5 +1,6 @@
 using Ecommerce.Application;
 using Ecommerce.Application.Database;
+using Ecommerce.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -23,6 +24,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
 
 var dbInitializer = app.Services.GetService<DbInitializer>();
