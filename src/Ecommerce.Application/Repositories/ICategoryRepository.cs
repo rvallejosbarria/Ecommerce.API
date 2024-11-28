@@ -6,6 +6,7 @@ public interface ICategoryRepository
 {
     Task<bool> CreateAsync(Category category);
     Task<Category?> GetByIdAsync(Guid id);
+    Task<Category?> GetBySlugAsync(string slug);
     Task<IEnumerable<Category>> GetAllAsync();
     Task<bool> UpdateAsync(Category category);
     Task<bool> DeleteAsync(Guid id);

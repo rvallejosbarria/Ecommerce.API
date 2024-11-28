@@ -18,6 +18,12 @@ public class CategoryRepository : ICategoryRepository
         return Task.FromResult(category);
     }
 
+    public Task<Category?> GetBySlugAsync(string slug)
+    {
+        var category = _categories.SingleOrDefault(c => c.Slug == slug);
+        return Task.FromResult(category);
+    }
+
     public Task<IEnumerable<Category>> GetAllAsync()
     {
         return Task.FromResult(_categories.AsEnumerable());
