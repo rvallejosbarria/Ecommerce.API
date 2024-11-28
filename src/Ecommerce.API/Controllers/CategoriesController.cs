@@ -24,13 +24,15 @@ public class CategoriesController : ControllerBase
 
         await _categoryRepository.CreateAsync(category);
 
-        return CreatedAtAction(nameof(Get), new { id = category.Id }, category);
+        return CreatedAtAction(nameof(Get), new { idOrSlug = category.Id }, category);
     }
 
     [HttpGet(ApiEndpoints.Categories.Get)]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    public async Task<IActionResult> Get([FromRoute] string idOrSlug)
     {
-        var category = await _categoryRepository.GetByIdAsync(id);
+        var category = Guid.TryParse(idOrSlug, out var id)
+            ? await _categoryRepository.GetByIdAsync(id)
+            : await _categoryRepository.GetBySlugAsync(idOrSlug);
         if (category is null) { return NotFound(); }
         return Ok(category.MapToResponse());
     }
