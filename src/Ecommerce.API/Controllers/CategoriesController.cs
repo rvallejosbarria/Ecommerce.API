@@ -41,4 +41,21 @@ public class CategoriesController : ControllerBase
         var categories = await _categoryRepository.GetAllAsync();
         return Ok(categories);
     }
+
+    [HttpPut(ApiEndpoints.Categories.Update)]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateCategoryRequest request)
+    {
+        var category = request.MapToCategory(id);
+        var updated = await _categoryRepository.UpdateAsync(category);
+        if (!updated) { return NotFound(); }
+        return Ok(category.MapToResponse());
+    }
+
+    [HttpDelete(ApiEndpoints.Categories.Delete)]
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    {
+        var removed = await _categoryRepository.DeleteAsync(id);
+        if (!removed) { return NotFound(); }
+        return Ok();
+    }
 }
