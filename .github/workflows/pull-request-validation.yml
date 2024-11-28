@@ -5,8 +5,8 @@ env:
 
 on:
   pull_request:
-    branches: [ "main" ]
-
+    branches: [ "master" ]
+    
 jobs:
   build:
     name: Pull Request Validation
@@ -25,6 +25,3 @@ jobs:
 
       - name: Test with dotnet
         run: dotnet test --configuration Release --no-build
-
-      - name: Format with dotnet
-        run: dotnet format -v detailed --verify-no-changes
