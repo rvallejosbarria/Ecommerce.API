@@ -13,7 +13,7 @@ public static class ContractMapping
         new Category { Id = id, Name = request.Name, Description = request.Description };
 
     public static CategoryResponse MapToResponse(this Category category) =>
-        new CategoryResponse { Id = Guid.NewGuid(), Name = category.Name, Slug = category.Slug, Description = category.Description };
+        new CategoryResponse { Id = category.Id, Name = category.Name, Slug = category.Slug, Description = category.Description };
 
     public static CategoriesResponse MapToResponse(this IEnumerable<Category> categories) =>
         new CategoriesResponse { Categories = categories.Select(MapToResponse) };
