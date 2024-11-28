@@ -4,11 +4,11 @@ using Models;
 
 public interface ICategoryRepository
 {
-    Task<bool> CreateAsync(Category category);
-    Task<Category?> GetByIdAsync(Guid id);
-    Task<Category?> GetBySlugAsync(string slug);
-    Task<IEnumerable<Category>> GetAllAsync();
-    Task<bool> UpdateAsync(Category category);
-    Task<bool> DeleteAsync(Guid id);
-    Task<bool> ExistsByIdAsync(Guid id);
+    Task<bool> CreateAsync(Category category, CancellationToken cancellationToken = default);
+    Task<Category?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Category?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<bool> UpdateAsync(Category category, CancellationToken cancellationToken = default);
+    Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<bool> ExistsByIdAsync(Guid id, CancellationToken cancellationToken = default);
 }
