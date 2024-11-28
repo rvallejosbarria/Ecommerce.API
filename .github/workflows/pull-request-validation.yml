@@ -1,0 +1,30 @@
+name: Pull Request Validation
+
+env:
+  DOTNET_VERSION: '8.0'
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Pull Request Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: Test with dotnet
+        run: dotnet test --configuration Release --no-build
+
+      - name: Format with dotnet
+        run: dotnet format -v detailed --verify-no-changes
