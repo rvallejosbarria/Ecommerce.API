@@ -11,14 +11,15 @@ public class CategoriesController : ControllerBase
     private readonly ILogger<CategoriesController> _logger;
     private readonly ICategoryService _categoryService;
 
-    public CategoriesController(ILogger<CategoriesController> logger, ICategoryService categoryRepository)
+    public CategoriesController(ILogger<CategoriesController> logger, ICategoryService categoryService)
     {
         _logger = logger;
-        _categoryService = categoryRepository;
+        _categoryService = categoryService;
     }
 
     [HttpPost(ApiEndpoints.Categories.Create)]
-    public async Task<IActionResult> Create([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCategoryRequest request,
+        CancellationToken cancellationToken)
     {
         var category = request.MapToCategory();
 
@@ -34,6 +35,7 @@ public class CategoriesController : ControllerBase
             ? await _categoryService.GetByIdAsync(id, cancellationToken)
             : await _categoryService.GetBySlugAsync(idOrSlug, cancellationToken);
         if (category is null) { return NotFound(); }
+
         return Ok(category.MapToResponse());
     }
 
@@ -45,11 +47,13 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut(ApiEndpoints.Categories.Update)]
-    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateCategoryRequest request,
+        CancellationToken cancellationToken)
     {
         var category = request.MapToCategory(id);
         var updated = await _categoryService.UpdateAsync(category, cancellationToken);
         if (updated is null) { return NotFound(); }
+
         return Ok(category.MapToResponse());
     }
 
@@ -58,6 +62,7 @@ public class CategoriesController : ControllerBase
     {
         var removed = await _categoryService.DeleteAsync(id, cancellationToken);
         if (!removed) { return NotFound(); }
+
         return Ok();
     }
 }

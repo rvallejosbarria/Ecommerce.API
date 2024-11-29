@@ -27,5 +27,22 @@ public class DbInitializer
                                       CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS categories_slug_idx
                                       ON categories USING btree(slug);
                                       """);
+
+        await connection.ExecuteAsync("""
+                                      CREATE TABLE IF NOT EXISTS products (
+                                          id UUID PRIMARY KEY,
+                                          slug TEXT NOT NULL,
+                                          name TEXT NOT NULL,
+                                          description TEXT NOT NULL,
+                                          price NUMERIC(10,2) NOT NULL,
+                                          stock INTEGER NOT NULL,
+                                          image TEXT
+                                      );
+                                      """);
+
+        await connection.ExecuteAsync("""
+                                      CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS products_slug_idx
+                                      ON products USING btree(slug);
+                                      """);
     }
 }

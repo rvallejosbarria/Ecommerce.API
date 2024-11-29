@@ -12,6 +12,8 @@ public static class ApplicationServiceCollectionExtensions
     {
         services.AddSingleton<ICategoryRepository, CategoryRepository>();
         services.AddSingleton<ICategoryService, CategoryService>();
+        services.AddSingleton<IProductRepository, ProductRepository>();
+        services.AddSingleton<IProductService, ProductService>();
         services.AddValidatorsFromAssemblyContaining<IApplicationMarker>(ServiceLifetime.Singleton);
         return services;
     }

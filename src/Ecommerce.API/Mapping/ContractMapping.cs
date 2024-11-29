@@ -17,4 +17,16 @@ public static class ContractMapping
 
     public static CategoriesResponse MapToResponse(this IEnumerable<Category> categories) =>
         new CategoriesResponse { Categories = categories.Select(MapToResponse) };
+
+    public static Product MapToProduct(this CreateProductRequest request) =>
+        new Product { Id = Guid.NewGuid(), Name = request.Name, Description = request.Description, Price = request.Price, Stock = request.Stock, Image = request.Image };
+
+    public static Product MapToProduct(this UpdateProductRequest request, Guid id) =>
+        new Product { Id = id, Name = request.Name, Description = request.Description, Price = request.Price, Stock = request.Stock, Image = request.Image };
+
+    public static ProductResponse MapToResponse(this Product product) =>
+        new ProductResponse { Id = product.Id, Name = product.Name, Slug = product.Slug, Description = product.Description, Price = product.Price, Stock = product.Stock, Image = product.Image };
+
+    public static ProductsResponse MapToResponse(this IEnumerable<Product> products) =>
+        new ProductsResponse { Products = products.Select(MapToResponse) };
 }
